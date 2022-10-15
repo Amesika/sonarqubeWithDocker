@@ -1,0 +1,22 @@
+version: "3"
+services:
+  sonarqube:
+    image: sonarqube:community
+    hostname: sonarqube
+    container_name: sonarqube
+    depends_on:
+      - db
+    env_file: ./.env/sonarqube.env
+    volumes:
+      - ./sonarqube/data/:/opt/sonarqube/data
+      - ./sonarqube/extensions/:/opt/sonarqube/extensions
+      - ./sonarqube/logs/:/opt/sonarqube/logs
+    ports:
+      - "9000:9000"
+  db:
+    image: postgres:12
+    hostname: postgresql
+    container_name: postgresql
+    env_file: ./.env/db.env
+    volumes:
+      - ./postgresql/:/var/lib/postgresql
